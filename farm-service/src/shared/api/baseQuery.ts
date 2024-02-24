@@ -5,7 +5,7 @@ import {
   type FetchBaseQueryMeta,
 } from "@reduxjs/toolkit/dist/query/fetchBaseQuery";
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { config } from "@/shared/config";
+import { config } from "@/shared/lib";
 
 export const baseQuery: BaseQueryFn<
   string | FetchArgs,

@@ -1,5 +1,5 @@
 import { LoginForm } from "@/features/authentication/login";
-import { config } from "@/shared/config";
+import { config } from "@/shared/lib";
 
 export function LoginPage() {
   return (

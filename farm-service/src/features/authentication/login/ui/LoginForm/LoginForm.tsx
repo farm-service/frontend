@@ -44,7 +44,7 @@ export const validateLoginForm = (
   formData: unknown
 ): Record<string, string> | null => {
   try {
-    const data = loginFormSchema.parse(formData);
+    loginFormSchema.parse(formData);
     return null;
   } catch (error) {
     if (error instanceof ZodError) {
@@ -64,7 +64,7 @@ export const LoginForm = ({ onComplete }: LoginFormProps) => {
   const dispatch = useAppDispatch();
 
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
 
@@ -91,11 +91,12 @@ export const LoginForm = ({ onComplete }: LoginFormProps) => {
       console.log("Form is valid, submitting...");
     }
 
-    const { email, password } = formData;
-    dispatch(loginThunk({ email, password }))
+    dispatch(loginThunk(formData))
       .unwrap()
       .then(() => onComplete?.())
-      .catch(console.error);
+      .catch((errors) => {
+        console.log(errors);
+      });
   };
 
   return (
@@ -123,11 +124,11 @@ export const LoginForm = ({ onComplete }: LoginFormProps) => {
               margin="normal"
               required
               fullWidth
-              id="email"
+              id="username"
               label="Email Address"
-              name="email"
+              name="username"
               onChange={handleChange}
-              autoComplete="email"
+              autoComplete="username"
               autoFocus
               error={!!formErrors?.email}
               helperText={formErrors?.email}

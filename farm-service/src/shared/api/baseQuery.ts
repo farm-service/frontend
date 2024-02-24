@@ -15,6 +15,7 @@ export const baseQuery: BaseQueryFn<
   FetchBaseQueryMeta
 > = fetchBaseQuery({
   baseUrl: config.API_ENDPOINT,
+  credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const { accessToken } = (getState() as any).session;
 

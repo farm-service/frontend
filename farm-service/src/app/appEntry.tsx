@@ -1,3 +1,4 @@
+import { Box, CssBaseline, ThemeProvider, createTheme } from "@mui/material";
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider as ReduxProvider } from "react-redux";
@@ -14,14 +15,19 @@ async function initApp() {
   // todo Move @mswjs worker to lazy import
 }
 
+const theme = createTheme();
+
 initApp().then(() => {
   ReactDOM.createRoot(root).render(
     <React.StrictMode>
       <ReduxProvider store={appStore}>
         <PersistGate loading={null} persistor={persistedStore}>
-          {/* <ThemeProvider> */}
-          <RouterProvider router={appRouter()} />
-          {/* </ThemeProvider> */}
+          <ThemeProvider theme={theme}>
+            <Box sx={{ height: "100vh" }}>
+              <CssBaseline />
+              <RouterProvider router={appRouter()} />
+            </Box>
+          </ThemeProvider>
         </PersistGate>
       </ReduxProvider>
     </React.StrictMode>

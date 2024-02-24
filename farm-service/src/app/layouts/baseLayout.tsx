@@ -1,6 +1,4 @@
 import { Layout } from "@/shared/ui";
-// import { LayoutHeader } from '@/widgets/LayoutHeader'
-// import { LayoutProfileCard } from '@/widgets/LayoutProfileCard'
 
 const TestBottomSlot = () => {
   return <div>test</div>;

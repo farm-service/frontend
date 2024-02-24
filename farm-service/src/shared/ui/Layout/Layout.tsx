@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import { type ReactNode } from "react";
 import { ScrollRestoration, Outlet } from "react-router-dom";
 import css from "./Layout.module.css";
@@ -12,7 +13,7 @@ type Props = {
 
 export function Layout(props: Props) {
   return (
-    <div>
+    <Box className={css.root}>
       {props.headerSlot}
       <div className={css.container}>
         <Outlet />
@@ -22,6 +23,6 @@ export function Layout(props: Props) {
       </footer>
       {props.bottomSlot}
       <ScrollRestoration />
-    </div>
+    </Box>
   );
 }

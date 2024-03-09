@@ -37,13 +37,13 @@ jobs:
       - name: Build with yarn
         run: yarn build
         working-directory: farm-service
-        env:
-          VITE_API_ENDPOINT: ${{ secrets.VITE_API_STORAGE_MODE }}
-          VITE_API_STORAGE_MODE: ${{ secrets.VITE_API_STORAGE_MODE }}
-          VITE_API_DELAY: ${{ secrets.VITE_API_STORAGE_MODE }}
-          VITE_API_USER_EMAIL: ${{ secrets.VITE_API_STORAGE_MODE }}
-          VITE_API_USER_PASSWORD: ${{ secrets.VITE_API_STORAGE_MODE }}
-          VITE_JWT_SECRET: ${{ secrets.VITE_API_STORAGE_MODE }}
+        # env:
+        #   VITE_API_ENDPOINT: ${{ secrets.VITE_API_STORAGE_MODE }}
+        #   VITE_API_STORAGE_MODE: ${{ secrets.VITE_API_STORAGE_MODE }}
+        #   VITE_API_DELAY: ${{ secrets.VITE_API_STORAGE_MODE }}
+        #   VITE_API_USER_EMAIL: ${{ secrets.VITE_API_STORAGE_MODE }}
+        #   VITE_API_USER_PASSWORD: ${{ secrets.VITE_API_STORAGE_MODE }}
+        #   VITE_JWT_SECRET: ${{ secrets.VITE_API_STORAGE_MODE }}
           
       - name: Deploy to Azure
         id: builddeploy

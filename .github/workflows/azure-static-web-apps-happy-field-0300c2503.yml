@@ -25,7 +25,13 @@ jobs:
         uses: actions/setup-node@v4
 
       - name: Install with yarn
-        run: yarn
+        run: |
+          echo $PWD
+          yarn
+        working-directory: farm-service
+
+      - name: Insert .env
+        run: echo ${{ secrets.dotenv_content }} > .env
         working-directory: farm-service
 
       - name: Build with yarn

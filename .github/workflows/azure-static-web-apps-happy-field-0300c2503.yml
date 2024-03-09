@@ -19,6 +19,19 @@ jobs:
         with:
           submodules: true
           lfs: false
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        working-directory: farm-service
+
+      - name: Install with yarn
+        run: yarn
+        working-directory: farm-service
+
+      - name: Build with yarn
+        run: yarn build
+        working-directory: farm-service
+          
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -28,10 +41,9 @@ jobs:
           action: "upload"
           ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
           # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "farm-service" # App source code path
-          api_location: "" # Api source code path - optional
-          output_location: "dist" # Built app content directory - optional
-          app_build_command: "yarn build"  
+          app_location: "farm-service/dist" # App source code path
+          output_location: ''
+          skip_app_build: true
           ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:

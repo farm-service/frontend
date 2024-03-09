@@ -1,14 +1,16 @@
 import { type ReactElement } from "react";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { baseLayout } from "@/app/layouts/baseLayout";
+import { selectIsAuthorized } from "@/entities/session";
 import { LoginPage } from "@/pages/Login/ui/Page/Page";
+import { useAppSelector } from "@/shared/model/hooks";
 
 type GuestGuardProps = {
   children: ReactElement;
 };
 
 function GuestGuard({ children }: GuestGuardProps) {
-  const isAuthorized = false;
+  const isAuthorized = useAppSelector(selectIsAuthorized);
 
   if (!isAuthorized) return <Navigate to="/login" />;
 
@@ -20,7 +22,7 @@ type AuthGuardProps = {
 };
 
 function AuthGuard({ children }: AuthGuardProps) {
-  const isAuthorized = true;
+  const isAuthorized = useAppSelector(selectIsAuthorized);
 
   if (isAuthorized) return <Navigate to="/" />;
 
@@ -47,9 +49,9 @@ export const appRouter = () =>
         {
           path: "/",
           element: (
-            <AuthGuard>
+            <GuestGuard>
               <div>test</div>
-            </AuthGuard>
+            </GuestGuard>
           ),
         },
       ],

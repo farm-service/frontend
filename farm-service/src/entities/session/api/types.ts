@@ -7,7 +7,7 @@ export interface SessionDto {
 }
 
 export interface RequestLoginBody {
-  email: string;
+  username: string;
   password: string;
 }
 

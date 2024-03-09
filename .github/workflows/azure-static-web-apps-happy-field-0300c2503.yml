@@ -22,8 +22,6 @@ jobs:
 
       - name: Setup node
         uses: actions/setup-node@v4
-        with:
-          working-directory: farm-service
 
       - name: Install with yarn
         run: yarn

@@ -37,27 +37,17 @@ jobs:
       - name: Build with yarn
         run: yarn build
         working-directory: farm-service
-        # env:
-        #   VITE_API_ENDPOINT: ${{ secrets.VITE_API_STORAGE_MODE }}
-        #   VITE_API_STORAGE_MODE: ${{ secrets.VITE_API_STORAGE_MODE }}
-        #   VITE_API_DELAY: ${{ secrets.VITE_API_STORAGE_MODE }}
-        #   VITE_API_USER_EMAIL: ${{ secrets.VITE_API_STORAGE_MODE }}
-        #   VITE_API_USER_PASSWORD: ${{ secrets.VITE_API_STORAGE_MODE }}
-        #   VITE_JWT_SECRET: ${{ secrets.VITE_API_STORAGE_MODE }}
           
       - name: Deploy to Azure
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_HAPPY_FIELD_0300C2503 }}
-          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
-          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
-          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
-          app_location: "farm-service/dist" # App source code path
-          output_location: ''
+          app_location: "farm-service/dist"
+          output_location: ""
           skip_app_build: true
-          ###### End of Repository/Build Configurations ######
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'

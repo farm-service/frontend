@@ -1,18 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { type RootState } from "@/app/appStore";
 import { sessionApi } from "../api/sessionApi";
-import { type SessionUserId } from "./types";
+// import { type SessionUserId } from "./types";
 
 type SessionSliceState =
   | {
       accessToken: string;
-      userId: SessionUserId;
+      // userId: SessionUserId;
       isAuthorized: true;
     }
   | {
       isAuthorized: false;
       accessToken?: string;
-      userId?: SessionUserId;
+      // userId?: SessionUserId;
     };
 
 const initialState: SessionSliceState = {
@@ -25,7 +25,7 @@ export const sessionSlice = createSlice({
   reducers: {
     clearSessionData: (state) => {
       state.accessToken = undefined;
-      state.userId = undefined;
+      // state.userId = undefined;
       state.isAuthorized = false;
     },
   },
@@ -37,8 +37,8 @@ export const sessionSlice = createSlice({
 
         // say TypeScript that isAuthorized = true
         if (state.isAuthorized) {
-          state.userId = payload.userId;
-          state.accessToken = payload.accessToken;
+          // state.userId = payload.userId;
+          // state.accessToken = payload.accessToken;
         }
       }
     );
@@ -47,7 +47,5 @@ export const sessionSlice = createSlice({
 
 export const selectIsAuthorized = (state: RootState) =>
   state.session.isAuthorized;
-
-export const selectUserId = (state: RootState) => state.session.userId;
 
 export const { clearSessionData } = sessionSlice.actions;

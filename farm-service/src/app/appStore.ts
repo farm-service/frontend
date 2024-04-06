@@ -13,6 +13,7 @@ import {
 import storage from "redux-persist/lib/storage";
 import { sessionSlice } from "@/entities/session";
 // import { themeSlice } from '@/entities/theme'
+import { invalidateAccessTokenListener } from "@/features/authentication/invalidateAccessToken";
 import { baseApi } from "@/shared/api";
 import { rootReducer } from "./rootReducer";
 
@@ -33,7 +34,7 @@ export function makeStore() {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(baseApi.middleware), // , invalidateAccessTokenListener.middleware
+      }).concat(baseApi.middleware, invalidateAccessTokenListener.middleware), // ,
   });
 
   setupListeners(store.dispatch);

@@ -1,26 +1,59 @@
-import { createBrowserRouter } from "react-router-dom";
+import { type ReactElement } from "react";
+import { Navigate, createBrowserRouter } from "react-router-dom";
 import { baseLayout } from "@/app/layouts/baseLayout";
-import { HomePage, LoginPage } from "@/pages";
-import { AuthGuard } from "./guards/auth";
+import { selectIsAuthorized } from "@/entities/session";
+import { HomePage } from "@/pages";
+import { LoginPage } from "@/pages/Login/ui/Page/Page";
+import { useAppSelector } from "@/shared/model";
+
+type GuestGuardProps = {
+  children: ReactElement;
+};
+
+function GuestGuard({ children }: GuestGuardProps) {
+  const isAuthorized = useAppSelector(selectIsAuthorized);
+
+  if (!isAuthorized) return <Navigate to="/login" />;
+
+  return children;
+}
+
+type AuthGuardProps = {
+  children: ReactElement;
+};
+
+function AuthGuard({ children }: AuthGuardProps) {
+  const isAuthorized = useAppSelector(selectIsAuthorized);
+
+  if (isAuthorized) return <Navigate to="/" />;
+
+  return children;
+}
 
 export const appRouter = () =>
   createBrowserRouter([
     {
       element: baseLayout,
-      // TODO: implement Error page
       errorElement: <div>error2</div>,
+      // loader: async () => {
+      //   return await featureToggleLoader(appStore.dispatch);
+      // },
       children: [
-        // TODO: move under the error layout
         {
           path: "/login",
-          element: <LoginPage />,
+          element: (
+            <AuthGuard>
+              <LoginPage />
+            </AuthGuard>
+          ),
         },
         {
           path: "/",
           element: (
-            <AuthGuard>
+            <GuestGuard>
+              {/* <LogoutButton /> */}
               <HomePage />
-            </AuthGuard>
+            </GuestGuard>
           ),
         },
       ],

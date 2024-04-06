@@ -1,47 +1,9 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
-import { AuthGuard } from "@/app/guards/auth";
-import { GuestGuard } from "@/app/guards/guest";
+import { createBrowserRouter } from "react-router-dom";
 import { baseLayout } from "@/app/layouts/baseLayout";
-import { useMeQuery } from "@/entities/user";
-import { selectUser } from "@/entities/user/model/slice";
 import { HomePage } from "@/pages";
 import { LoginPage } from "@/pages/Login/ui/Page/Page";
-import { useAppSelector } from "@/shared/model";
-
-const RoleBasedRoute = ({
-  allowedRoles,
-  component: Component,
-  ...rest
-}: any) => {
-  const data = useAppSelector(selectUser);
-
-  const userRole = data?.role_id === 1 ? "producer" : "consumer";
-  // Check if the user's role is allowed to access the route
-  const isAllowed = allowedRoles.includes(userRole);
-
-  return (
-    <GuestGuard>
-      {isAllowed ? (
-        <Component {...rest} />
-      ) : (
-        <Navigate to="/" /> // Redirect to home page if user's role is not allowed
-      )}
-    </GuestGuard>
-  );
-};
-
-const RedirectPage = () => {
-  const { data, isLoading, isFetching } = useMeQuery();
-  const userRole = data?.role_id === 1 ? "producer" : "consumer";
-
-  if (isLoading || isFetching) {
-    return <div>Loading...</div>;
-  }
-
-  const redirectPath = userRole === "producer" ? "/producer" : "/consumer";
-
-  return <Navigate to={redirectPath} />;
-};
+import { RedirectPage } from "@/pages/RedirectByRolePage";
+import { AuthGuard, RoleBasedGuard } from "@/app/guards";
 
 export const appRouter = () =>
   createBrowserRouter([
@@ -50,7 +12,7 @@ export const appRouter = () =>
       errorElement: <div>error2</div>,
       // loader: async () => {
       //   return await featureToggleLoader(appStore.dispatch);
-      // },
+      // },в
       children: [
         {
           path: "/login",
@@ -67,13 +29,14 @@ export const appRouter = () =>
         {
           path: "/producer",
           element: (
-            <RoleBasedRoute allowedRoles={["producer"]} component={HomePage} />
+            <RoleBasedGuard allowedRoles={["producer"]} component={HomePage} />
           ),
         },
         {
           path: "/consumer",
+          // another page
           element: (
-            <RoleBasedRoute allowedRoles={["consumer"]} component={HomePage} />
+            <RoleBasedGuard allowedRoles={["consumer"]} component={HomePage} />
           ),
         },
       ],

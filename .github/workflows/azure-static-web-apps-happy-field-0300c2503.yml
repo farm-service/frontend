@@ -37,6 +37,10 @@ jobs:
       - name: Build with yarn
         run: yarn build
         working-directory: farm-service
+
+      - name: Move Azure SWA config in with build
+        run: |
+          cp ./devops/staticwebapp.config.json ./farm-service/dist/staticwebapp.config.json
           
       - name: Deploy to Azure
         id: builddeploy

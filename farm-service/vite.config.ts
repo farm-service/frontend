@@ -5,6 +5,8 @@ import path from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import fs from 'fs';
 
+const useSSL = process.env.NODE_ENV === 'production';
+
 export default defineConfig({
   plugins: [
     react(),
@@ -12,7 +14,7 @@ export default defineConfig({
     (visualizer({ gzipSize: true, open: true }) as PluginOption),
   ].filter(Boolean),
   server: {
-    https: {
+    https: useSSL ? { } : {
       key: fs.readFileSync('./.cert/key.pem'),
       cert: fs.readFileSync('./.cert/cert.pem'),
     }

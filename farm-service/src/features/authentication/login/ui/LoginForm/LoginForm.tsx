@@ -13,6 +13,7 @@ import { useState } from "react";
 import { ZodError } from "zod";
 import { loginThunk } from "@/features/authentication/login/model/login";
 import { loginFormSchema } from "@/features/authentication/login/model/loginFormSchema";
+import { LogoutButton } from "@/features/authentication/logout/ui/LogoutButton/LogoutButton";
 import { useAppDispatch } from "@/shared/model/hooks";
 
 function Copyright(props: any) {

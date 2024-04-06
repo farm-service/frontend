@@ -2,6 +2,7 @@ import { type ReactElement } from "react";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { baseLayout } from "@/app/layouts/baseLayout";
 import { selectIsAuthorized } from "@/entities/session";
+import { LogoutButton } from "@/features/authentication/logout/ui/LogoutButton/LogoutButton";
 import { LoginPage } from "@/pages/Login/ui/Page/Page";
 import { useAppSelector } from "@/shared/model/hooks";
 
@@ -50,7 +51,9 @@ export const appRouter = () =>
           path: "/",
           element: (
             <GuestGuard>
-              <div>test</div>
+              <div>
+                <LogoutButton />
+              </div>
             </GuestGuard>
           ),
         },

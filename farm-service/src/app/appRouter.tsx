@@ -1,34 +1,47 @@
-import { type ReactElement } from "react";
-import { Navigate, createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, Navigate } from "react-router-dom";
+import { AuthGuard } from "@/app/guards/auth";
+import { GuestGuard } from "@/app/guards/guest";
 import { baseLayout } from "@/app/layouts/baseLayout";
-import { selectIsAuthorized } from "@/entities/session";
+import { useMeQuery } from "@/entities/user";
+import { selectUser } from "@/entities/user/model/slice";
 import { HomePage } from "@/pages";
 import { LoginPage } from "@/pages/Login/ui/Page/Page";
 import { useAppSelector } from "@/shared/model";
 
-type GuestGuardProps = {
-  children: ReactElement;
+const RoleBasedRoute = ({
+  allowedRoles,
+  component: Component,
+  ...rest
+}: any) => {
+  const data = useAppSelector(selectUser);
+
+  const userRole = data?.role_id === 1 ? "producer" : "consumer";
+  // Check if the user's role is allowed to access the route
+  const isAllowed = allowedRoles.includes(userRole);
+
+  return (
+    <GuestGuard>
+      {isAllowed ? (
+        <Component {...rest} />
+      ) : (
+        <Navigate to="/" /> // Redirect to home page if user's role is not allowed
+      )}
+    </GuestGuard>
+  );
 };
 
-function GuestGuard({ children }: GuestGuardProps) {
-  const isAuthorized = useAppSelector(selectIsAuthorized);
+const RedirectPage = () => {
+  const { data, isLoading, isFetching } = useMeQuery();
+  const userRole = data?.role_id === 1 ? "producer" : "consumer";
 
-  if (!isAuthorized) return <Navigate to="/login" />;
+  if (isLoading || isFetching) {
+    return <div>Loading...</div>;
+  }
 
-  return children;
-}
+  const redirectPath = userRole === "producer" ? "/producer" : "/consumer";
 
-type AuthGuardProps = {
-  children: ReactElement;
+  return <Navigate to={redirectPath} />;
 };
-
-function AuthGuard({ children }: AuthGuardProps) {
-  const isAuthorized = useAppSelector(selectIsAuthorized);
-
-  if (isAuthorized) return <Navigate to="/" />;
-
-  return children;
-}
 
 export const appRouter = () =>
   createBrowserRouter([
@@ -49,10 +62,18 @@ export const appRouter = () =>
         },
         {
           path: "/",
+          element: <RedirectPage />,
+        },
+        {
+          path: "/producer",
           element: (
-            <GuestGuard>
-              <HomePage />
-            </GuestGuard>
+            <RoleBasedRoute allowedRoles={["producer"]} component={HomePage} />
+          ),
+        },
+        {
+          path: "/consumer",
+          element: (
+            <RoleBasedRoute allowedRoles={["consumer"]} component={HomePage} />
           ),
         },
       ],

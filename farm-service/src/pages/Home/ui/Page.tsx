@@ -35,9 +35,6 @@ export const HomePage: FC = () => {
     producer: "test",
   } as Order;
 
-  const { data, isLoading } = useMeQuery();
-  console.log('test', data);
-
   return (
     <Box>
       <Grid container columnSpacing={2}>

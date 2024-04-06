@@ -27,6 +27,8 @@ export const sessionSlice = createSlice({
       state.accessToken = undefined;
       // state.userId = undefined;
       state.isAuthorized = false;
+
+      return state;
     },
   },
   extraReducers: (builder) => {

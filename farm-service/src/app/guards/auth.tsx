@@ -1,10 +1,16 @@
+import { type ReactElement } from "react";
 import { Navigate } from "react-router-dom";
-import { type GuardProps } from "./interfaces";
+import { selectIsAuthorized } from "@/entities/session";
+import { useAppSelector } from "@/shared/model";
 
-export function AuthGuard({ children }: GuardProps) {
-  const isAuthorized = true;
+type AuthGuardProps = {
+  children: ReactElement;
+};
 
-  if (!isAuthorized) return <Navigate to="/login" />;
+export function AuthGuard({ children }: AuthGuardProps) {
+  const isAuthorized = useAppSelector(selectIsAuthorized);
+
+  if (isAuthorized) return <Navigate to={`/`} />;
 
   return children;
 }

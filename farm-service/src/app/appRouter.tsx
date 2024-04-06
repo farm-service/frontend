@@ -51,7 +51,6 @@ export const appRouter = () =>
           path: "/",
           element: (
             <GuestGuard>
-              {/* <LogoutButton /> */}
               <HomePage />
             </GuestGuard>
           ),

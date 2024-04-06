@@ -1,3 +1,4 @@
+import Button from "@mui/material/Button";
 import { useConfirmModal } from "@/shared/lib";
 import { useAppDispatch } from "@/shared/model";
 import { logoutThunk } from "../../model/logout";
@@ -13,7 +14,6 @@ export function LogoutButton() {
     logoutModal.show({
       title: "Are you sure?",
       onConfirm: () => {
-        console.log("test");
         dispatch(logoutThunk())
           .unwrap()
           .finally(() => {
@@ -25,8 +25,8 @@ export function LogoutButton() {
   };
 
   return (
-    <a href="#" onClick={onConfirmLogout}>
+    <Button color={"error"} variant="contained" onClick={onConfirmLogout}>
       logout
-    </a>
+    </Button>
   );
 }

@@ -11,10 +11,9 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { ZodError } from "zod";
-import { loginThunk } from "@/features/authentication/login/model/login";
+import { useLoginMutation } from "@/entities/session";
 import { loginFormSchema } from "@/features/authentication/login/model/loginFormSchema";
-import { LogoutButton } from "@/features/authentication/logout/ui/LogoutButton/LogoutButton";
-import { useAppDispatch } from "@/shared/model/hooks";
+// import { useLoginMutation } from "@/entities/session/api/sessionApi";
 
 function Copyright(props: any) {
   return (
@@ -62,7 +61,7 @@ export const validateLoginForm = (
 };
 
 export const LoginForm = ({ onComplete }: LoginFormProps) => {
-  const dispatch = useAppDispatch();
+  const [loginMutation, { isLoading, isError, error }] = useLoginMutation();
 
   const [formData, setFormData] = useState({
     username: "",
@@ -92,12 +91,7 @@ export const LoginForm = ({ onComplete }: LoginFormProps) => {
       console.log("Form is valid, submitting...");
     }
 
-    dispatch(loginThunk(formData))
-      .unwrap()
-      .then(() => onComplete?.())
-      .catch((errors) => {
-        console.log(errors);
-      });
+    loginMutation(formData);
   };
 
   return (

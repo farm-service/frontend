@@ -1,8 +1,7 @@
 import { baseApi, SESSION_TAG } from "@/shared/api";
 // import { mapSession } from "../lib/mapSession";
-import { mapUser } from "../lib/mapUser";
-import { type User, type Session } from "../model/types";
-import { type UserDto, type RequestLoginBody, type SessionDto } from "./types";
+import { type Session } from "../model/types";
+import { type RequestLoginBody } from "./types";
 
 function objectToFormData(obj: any) {
   const formData = new FormData();
@@ -25,17 +24,7 @@ export const sessionApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [SESSION_TAG],
     }),
-
-    // TODO: FSD: Move to entities/user/api/userApi.ts
-    // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-    me: build.query<User, void>({
-      query: () => ({
-        url: "/me",
-      }),
-      providesTags: [SESSION_TAG],
-      transformResponse: (response: UserDto) => mapUser(response),
-    }),
   }),
 });
 
-export const { useLoginMutation, useMeQuery } = sessionApi;
+export const { useLoginMutation } = sessionApi;

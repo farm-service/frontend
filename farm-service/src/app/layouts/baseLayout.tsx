@@ -1,4 +1,4 @@
-import Button from "@mui/material/Button";
+import { LogoutButton } from "@/features/authentication/logout/ui/LogoutButton/LogoutButton";
 import { Layout } from "@/shared/ui";
 import classes from "./baseLayout.module.css";
 
@@ -10,9 +10,7 @@ const Header = () => {
   return (
     <div className={classes.header}>
       <div className={classes.logo}>LOGO</div>
-      <Button color={"error"} variant="contained">
-        Logout
-      </Button>
+      <LogoutButton />
     </div>
   );
 };

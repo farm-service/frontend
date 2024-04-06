@@ -2,9 +2,9 @@ import { type ReactElement } from "react";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { baseLayout } from "@/app/layouts/baseLayout";
 import { selectIsAuthorized } from "@/entities/session";
-import { LogoutButton } from "@/features/authentication/logout/ui/LogoutButton/LogoutButton";
+import { HomePage } from "@/pages";
 import { LoginPage } from "@/pages/Login/ui/Page/Page";
-import { useAppSelector } from "@/shared/model/hooks";
+import { useAppSelector } from "@/shared/model";
 
 type GuestGuardProps = {
   children: ReactElement;
@@ -51,9 +51,8 @@ export const appRouter = () =>
           path: "/",
           element: (
             <GuestGuard>
-              <div>
-                <LogoutButton />
-              </div>
+              {/* <LogoutButton /> */}
+              <HomePage />
             </GuestGuard>
           ),
         },

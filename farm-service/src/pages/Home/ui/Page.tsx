@@ -1,15 +1,16 @@
-import { Box, Grid } from "@mui/material";
+import { Box } from "@mui/material";
 import { type FC } from "react";
 import { type Order } from "@/entities/order";
-import { OrderCard, OrdersColumn } from "@/widgets";
-import css from "./page.module.css";
+import { useMeQuery } from "@/entities/user";
+import { Status } from "@/shared/ui";
+import { OrdersTable } from "@/widgets/table";
 
 export const HomePage: FC = () => {
   const order = {
     status: "open",
     consumer: "test",
     deadline: "March, 12, 2015",
-    product: "Onion",
+    product: "Onion 2",
     amount: 1,
     unit: "kg",
     producer: "test",
@@ -29,39 +30,30 @@ export const HomePage: FC = () => {
     status: "delivery",
     consumer: "test",
     deadline: "March, 12, 2015",
-    product: "Onion",
+    product: "Onion 3",
     amount: 1,
     unit: "kg",
-    producer: "test",
+    producer: "test 2",
   } as Order;
+
+  const { data, isLoading } = useMeQuery();
+
+  const orders = [order, order2, order3];
 
   return (
     <Box>
-      <Grid container columnSpacing={2}>
-        <Grid className={css.container} item xs={4}>
-          <OrdersColumn title="Forecasted">
-            <OrderCard order={order} />
-          </OrdersColumn>
-        </Grid>
-
-        <Grid className={css.container} item xs={4}>
-          <OrdersColumn title="Confirmed">
-            <OrderCard order={order2} />
-          </OrdersColumn>
-        </Grid>
-
-        <Grid className={css.container} item xs={4}>
-          <OrdersColumn title="Delivery">
-            <>
-              <OrderCard order={order3} />
-              <OrderCard order={order3} />
-              <OrderCard order={order3} />
-              <OrderCard order={order3} />
-              <OrderCard order={order3} />
-            </>
-          </OrdersColumn>
-        </Grid>
-      </Grid>
+      <OrdersTable
+        columns={[
+          { columnName: "product", columnTitle: "Product name" },
+          { columnName: "amount", columnTitle: "amount" },
+          { columnName: "status", columnTitle: "status" },
+          { columnName: "producer", columnTitle: "Producer" },
+        ]}
+        data={orders.filter((el) => el.status === "confirm")}
+        cellComponentsByColumn={{
+          status: (data) => <Status status={data.status} />,
+        }}
+      />
     </Box>
   );
 };

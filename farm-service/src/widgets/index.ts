@@ -1,1 +1,1 @@
-export { OrdersTable } from "./table";
+export { Header } from "./header";

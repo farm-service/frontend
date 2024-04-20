@@ -2,6 +2,7 @@ import { useModal, create as createModal } from "@ebay/nice-modal-react";
 import { Modal } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 import { useCallback, useEffect, useState } from "react";
 
 type Props = {
@@ -44,10 +45,25 @@ function ConfirmModalPresenter(props: Props) {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Box bgcolor={"#fff"} display={"flex"} justifyContent={"center"}>
-        <span className="text_base text_bold">{title}</span>
-        <Button onClick={onConfirmHandler}>{confirmText}</Button>
-        <Button onClick={onCancelHandler}>{cancelText}</Button>
+      <Box
+        bgcolor={"#fff"}
+        display={"flex"}
+        padding={3}
+        justifyContent={"center"}
+      >
+        <Typography
+          display={"flex"}
+          alignItems={"center"}
+          className="text_base text_bold"
+        >
+          {title}
+        </Typography>
+        <Button onClick={onConfirmHandler}>
+          <Typography>{confirmText}</Typography>
+        </Button>
+        <Button onClick={onCancelHandler}>
+          <Typography>{cancelText}</Typography>
+        </Button>
       </Box>
     </Modal>
   );

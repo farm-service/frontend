@@ -6,19 +6,25 @@ import { SESSION_TAG } from "@/shared/api";
 import { USER_TAG } from "@/shared/api/tags";
 import { wait } from "@/shared/lib";
 
+// Wrap the action in a function that returns a Promise
+const asyncClearSessionData = () => async (dispatch: any) => {
+  dispatch(clearSessionData());
+  return await Promise.resolve();
+};
+
+const asyncClearUserData = () => async (dispatch: any) => {
+  dispatch(clearUserData());
+  return await Promise.resolve();
+};
+
 export const logoutThunk = createAsyncThunk<void, void, { state: RootState }>(
   "authentication/logout",
   async (_: unknown, { dispatch }) => {
-    dispatch(clearSessionData());
-    dispatch(clearUserData());
-
-    // Wait 10ms to invalidateTags in next event loop tick.
-    // Otherwise after invalidate related requests with SESSION_TAG
-    // will be started, but isAuthorized will still be equal to true
-    await wait(10);
+    await dispatch(asyncClearSessionData());
+    await dispatch(asyncClearUserData());
 
     // 👇 ATTENTION: This line clear all baseApi state instead of sessionApi
-    // dispatch(sessionApi.util.resetApiState())
+    dispatch(sessionApi.util.resetApiState());
 
     dispatch(sessionApi.util.invalidateTags([SESSION_TAG]));
     dispatch(userApi.util.invalidateTags([USER_TAG]));

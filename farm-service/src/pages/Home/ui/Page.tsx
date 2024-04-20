@@ -71,8 +71,8 @@ export const HomePage: FC = () => {
           modified: ({ modified }) => (
             <div>{`${modified.getDate()}.${modified.getMonth()}.${modified.getFullYear()}`}</div>
           ),
-          date_deliver: ({ modified }) => (
-            <div>{`${modified.getDate()}.${modified.getMonth()}.${modified.getFullYear()}`}</div>
+          date_deliver: ({ date_deliver }) => (
+            <div>{`${date_deliver.getDate()}.${date_deliver.getMonth()}.${date_deliver.getFullYear()}`}</div>
           ),
           producer: ({ producer }) => <div>{producer?.name}</div>,
           status: (data) => <Status status={data.status} />,

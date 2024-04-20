@@ -1,5 +1,5 @@
-import { useMeQuery } from "@/entities/user";
 import { Navigate } from "react-router-dom";
+import { useMeQuery } from "@/entities/user";
 
 export const RedirectPage = () => {
   const { data, isLoading, isFetching } = useMeQuery();

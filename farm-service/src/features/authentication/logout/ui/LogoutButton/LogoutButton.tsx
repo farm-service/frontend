@@ -3,7 +3,8 @@ import { useConfirmModal } from "@/shared/lib";
 import { useAppDispatch } from "@/shared/model";
 import { logoutThunk } from "../../model/logout";
 
-export function LogoutButton() {
+type LogoutButtonProps = { onLogoutClick: VoidFunction };
+export function LogoutButton({ onLogoutClick }: LogoutButtonProps) {
   const dispatch = useAppDispatch();
   const logoutModal = useConfirmModal();
 
@@ -19,6 +20,7 @@ export function LogoutButton() {
           .finally(() => {
             logoutModal.remove();
           });
+        onLogoutClick();
       },
       onCancel: () => logoutModal.remove(),
     });

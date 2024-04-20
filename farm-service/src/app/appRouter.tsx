@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
+import { AuthGuard, RoleBasedGuard } from "@/app/guards";
 import { baseLayout } from "@/app/layouts/baseLayout";
 import { HomePage } from "@/pages";
 import { LoginPage } from "@/pages/Login/ui/Page/Page";
 import { RedirectPage } from "@/pages/RedirectByRolePage";
-import { AuthGuard, RoleBasedGuard } from "@/app/guards";
 
 export const appRouter = () =>
   createBrowserRouter([

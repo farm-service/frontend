@@ -7,4 +7,4 @@ export interface User {
   registered_at: Nullable<string>;
   role_id: Nullable<1 | 2>;
   username: Nullable<string>;
-};
+}

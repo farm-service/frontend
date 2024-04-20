@@ -12,7 +12,7 @@ export const appRouter = () =>
       errorElement: <div>error2</div>,
       // loader: async () => {
       //   return await featureToggleLoader(appStore.dispatch);
-      // },в
+      // },
       children: [
         {
           path: "/login",
@@ -30,6 +30,15 @@ export const appRouter = () =>
           path: "/producer",
           element: (
             <RoleBasedGuard allowedRoles={["producer"]} component={HomePage} />
+          ),
+        },
+        {
+          path: "/:userRole/myRequests",
+          element: (
+            <RoleBasedGuard
+              allowedRoles={["producer", "consumer"]}
+              component={HomePage}
+            />
           ),
         },
         {

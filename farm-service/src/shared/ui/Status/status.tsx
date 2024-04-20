@@ -14,11 +14,12 @@ export const Status = ({ status }: Props) => {
         return "rgba(198, 204, 41)";
     }
   }, [status]);
-  console.log("test", status);
+
   return (
     <Box
       textTransform={"capitalize"}
       minWidth={"70px"}
+      maxWidth={"140px"}
       textAlign={"center"}
       fontSize={14}
       color={"#fff"}

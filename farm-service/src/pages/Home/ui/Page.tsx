@@ -1,7 +1,5 @@
 import { Box } from "@mui/material";
 import { type FC } from "react";
-import { type Order } from "@/entities/order";
-import { useMeQuery } from "@/entities/user";
 import { Status } from "@/shared/ui";
 import { OrdersTable } from "@/widgets/table";
 
@@ -14,7 +12,7 @@ export const HomePage: FC = () => {
     amount: 1,
     unit: "kg",
     producer: "test",
-  } as Order;
+  };
 
   const order2 = {
     status: "confirm",
@@ -24,7 +22,7 @@ export const HomePage: FC = () => {
     amount: 1,
     unit: "kg",
     producer: "test",
-  } as Order;
+  };
 
   const order3 = {
     status: "delivery",
@@ -34,9 +32,7 @@ export const HomePage: FC = () => {
     amount: 1,
     unit: "kg",
     producer: "test 2",
-  } as Order;
-
-  const { data, isLoading } = useMeQuery();
+  };
 
   const orders = [order, order2, order3];
 
@@ -45,11 +41,11 @@ export const HomePage: FC = () => {
       <OrdersTable
         columns={[
           { columnName: "product", columnTitle: "Product name" },
-          { columnName: "amount", columnTitle: "amount" },
-          { columnName: "status", columnTitle: "status" },
+          { columnName: "amount", columnTitle: "Amount" },
+          { columnName: "status", columnTitle: "Status" },
           { columnName: "producer", columnTitle: "Producer" },
         ]}
-        data={orders.filter((el) => el.status === "confirm")}
+        data={orders}
         cellComponentsByColumn={{
           status: (data) => <Status status={data.status} />,
         }}

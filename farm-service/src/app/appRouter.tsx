@@ -12,7 +12,7 @@ export const appRouter = () =>
       errorElement: <div>error2</div>,
       // loader: async () => {
       //   return await featureToggleLoader(appStore.dispatch);
-      // },в
+      // },
       children: [
         {
           path: "/login",

@@ -1,6 +1,7 @@
 import { type ElementType } from "react";
 import { Navigate } from "react-router-dom";
 import { GuestGuard } from "@/app/guards/guest";
+import { useMeQuery } from "@/entities/user";
 import { selectUser } from "@/entities/user/model/slice";
 import { useAppSelector } from "@/shared/model";
 
@@ -15,6 +16,8 @@ export const RoleBasedGuard = ({
   ...rest
 }: Props) => {
   const data = useAppSelector(selectUser);
+
+  useMeQuery();
 
   const userRole = data?.role_id === 1 ? "producer" : "consumer";
   const isAllowed = allowedRoles.includes(userRole);

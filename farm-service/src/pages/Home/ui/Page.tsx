@@ -1,8 +1,8 @@
 import { Box, Grid } from "@mui/material";
 import { type FC } from "react";
 import { type Order } from "@/entities/order";
-import { useMeQuery } from "@/entities/user";
 import { OrderCard, OrdersColumn } from "@/widgets";
+import css from "./page.module.css";
 
 export const HomePage: FC = () => {
   const order = {
@@ -38,19 +38,19 @@ export const HomePage: FC = () => {
   return (
     <Box>
       <Grid container columnSpacing={2}>
-        <Grid item xs={4}>
+        <Grid className={css.container} item xs={4}>
           <OrdersColumn title="Forecasted">
             <OrderCard order={order} />
           </OrdersColumn>
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid className={css.container} item xs={4}>
           <OrdersColumn title="Confirmed">
             <OrderCard order={order2} />
           </OrdersColumn>
         </Grid>
 
-        <Grid item xs={4}>
+        <Grid className={css.container} item xs={4}>
           <OrdersColumn title="Delivery">
             <>
               <OrderCard order={order3} />

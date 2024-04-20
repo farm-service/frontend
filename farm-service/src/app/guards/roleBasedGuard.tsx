@@ -1,3 +1,4 @@
+import { Box, CircularProgress } from "@mui/material";
 import { type ElementType } from "react";
 import { Navigate } from "react-router-dom";
 import { GuestGuard } from "@/app/guards/guest";
@@ -15,20 +16,31 @@ export const RoleBasedGuard = ({
   component: Component,
   ...rest
 }: Props) => {
-  const data = useAppSelector(selectUser);
-
-  useMeQuery();
-
-  const userRole = data?.role_id === 1 ? "producer" : "consumer";
+  const { isLoading, isFetching } = useMeQuery();
+  const { role_id } = useAppSelector(selectUser) || {};
+  const userRole = role_id === 1 ? "producer" : "consumer";
   const isAllowed = allowedRoles.includes(userRole);
+
+  if (isLoading || isFetching) {
+    return (
+      <Box
+        display="flex"
+        height={"80vh"}
+        alignItems={"center"}
+        justifyContent="center"
+      >
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (!isAllowed) {
+    return <Navigate to="/" />; // Redirect to home page if user's role is not allowed
+  }
 
   return (
     <GuestGuard>
-      {isAllowed ? (
-        <Component {...rest} />
-      ) : (
-        <Navigate to="/" /> // Redirect to home page if user's role is not allowed
-      )}
+      <Component {...rest} />
     </GuestGuard>
   );
 };

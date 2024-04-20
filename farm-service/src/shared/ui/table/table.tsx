@@ -5,6 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Typography from "@mui/material/Typography";
 import { type ReactElement } from "react";
 
 type OrderColumn<T> = {
@@ -30,7 +31,7 @@ export const OrdersTable = <T extends Record<string, any>>({
           <TableRow>
             {columns.map((column) => (
               <TableCell variant={"head"} key={column.columnName as string}>
-                {column.columnTitle}
+                <Typography fontWeight="bold">{column.columnTitle}</Typography>
               </TableCell>
             ))}
           </TableRow>

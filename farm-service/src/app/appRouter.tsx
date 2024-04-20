@@ -33,6 +33,15 @@ export const appRouter = () =>
           ),
         },
         {
+          path: "/:userRole/myRequests",
+          element: (
+            <RoleBasedGuard
+              allowedRoles={["producer", "consumer"]}
+              component={HomePage}
+            />
+          ),
+        },
+        {
           path: "/consumer",
           // another page
           element: (

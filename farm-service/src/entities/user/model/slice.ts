@@ -20,7 +20,6 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     clearUserData: (state) => {
-      console.log('test');
       state = { ...initialState };
 
       return state;
